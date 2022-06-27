@@ -1,0 +1,92 @@
+<!doctype html>
+<head>
+<title>Todo App</title>
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div id="toDoApp" v-cloak>
+
+<header></header>
+
+<main>
+    <div class="main-content">
+    <h1 class="title">Todo app</h1>
+
+    <div class="main-components">
+
+<!-- Add todo -->
+
+    <div class="addtodo component">
+        <h2>New todo...</h2>
+        <input 
+        type="text" 
+        class="addtodo-input" 
+        placeholder="Write text..." 
+        v-model="inputValue"
+        @keypress.enter="addTodo"
+        >
+        <button 
+        :class="{
+            'addtodo-btn': true,
+            'active': inputValue.length > 0,}"
+        @click="addTodo"
+        >+</button>
+    </div>
+
+<!-- Todo list -->
+
+    <div class="todolist component">
+        <div class="todolist-title-search">
+            <h2>My todos</h2>
+            <input 
+            type="text" 
+            class="todolist-input" 
+            placeholder="Search..."
+            v-model.trim="searchValue"
+            @keyup="searchTodos()"
+            >
+        </div>
+
+        <div class="todolist-navbar">
+            <button @click="all">Все</button>
+            <span>/</span>
+            <button @click="sortDone">Выполненные</button>
+            <span>/</span>
+            <button @click="sortUndone">Невыполненные</button>
+        </div>
+
+         <div class="todolist-items">
+            <div 
+            class="item" 
+            v-for="(todo) in todos"
+            :key="todo"
+            >
+                <h1 class="item-title">
+                {{todo.title}}
+                </h1>
+                <label class="switch">
+                <input 
+                id="check"
+                type="checkbox" 
+                v-model="todo.completed"
+                @change="changed()"
+                >
+                <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="no-todo" v-if="todos.length == 0">
+            You dont have any todos.
+        </div>
+
+    </div>
+    </div>
+</main>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script src="./components/toDoApp.js"></script>
+</div>
+</body>
+</html>
